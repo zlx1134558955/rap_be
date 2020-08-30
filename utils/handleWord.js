@@ -53,6 +53,7 @@ module.exports.handleWord = (word = '', rate = 0) => {
   const final_without_tone_arr = [];
   const type_with_tone_arr = [];
   const type_without_tone_arr = [];
+  const length = word.length;
   pinyin_with_tone.split(' ').forEach((pinyin, index) => {
     for (let item of initial_list) {
       if (pinyin.indexOf(item) === 0) {
@@ -108,6 +109,7 @@ module.exports.handleWord = (word = '', rate = 0) => {
   return {
     word,
     rate,
+    length,
     initial: initial_arr.join('-'),
     final_with_tone: final_with_tone_arr.join('-'),
     final_without_tone: final_without_tone_arr.join('-'),

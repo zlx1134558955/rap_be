@@ -37,8 +37,8 @@ async function addWord_fn (req, res, next, that) {
  * @returns Array<Word> 韵脚列表
  */
 async function getWords_fn (req, res, next, that) {
-  let { word, rap_num, tone_type } = req.query;
-  if (No([word, rap_num, tone_type])) {  // 验证参数
+  let { word, rap_num, tone_type, length } = req.query;
+  if (No([word, rap_num, tone_type, length])) {  // 验证参数
     paramErr(res);
     return
   }
@@ -54,7 +54,7 @@ async function getWords_fn (req, res, next, that) {
   type_with_tone = type_with_tone.includes('-') ? type_with_tone : `-${type_with_tone}`;
   type_with_tone = num === 0 ? '' : type_with_tone;
   try {
-    const data = await summaryModel.getBackUps(type_with_tone, type_without_tone)
+    const data = await summaryModel.getBackUps(type_with_tone, type_without_tone, length)
     success(res, data)
   }
   catch (err) { next(err) }

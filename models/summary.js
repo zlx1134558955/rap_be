@@ -11,15 +11,17 @@ class SummaryModel extends BaseModel {
       final_without_tone: { type: Sequelize.STRING },
       type_with_tone: { type: Sequelize.STRING },
       type_without_tone: { type: Sequelize.STRING },
+      length: { type: Sequelize.INTEGER },
     })
     this.model = super.getModel()
     this.model.sync()
   }
-  getBackUps (type_with_tone, type_without_tone) {
+  getBackUps (type_with_tone, type_without_tone, length) {
     return this.model.findAll({
       where: {
         type_without_tone: { [Op.like]: `%${type_without_tone}` },
-        type_with_tone: { [Op.like]: `%${type_with_tone}` }
+        type_with_tone: { [Op.like]: `%${type_with_tone}` },
+        length: length
       },
       offset: 0,
       limit: 100,
