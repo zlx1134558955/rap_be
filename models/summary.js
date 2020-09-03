@@ -16,12 +16,11 @@ class SummaryModel extends BaseModel {
     this.model = super.getModel()
     this.model.sync()
   }
-  getBackUps (type_with_tone, type_without_tone, length) {
+  getBackUps (type_with_tone, type_without_tone) {
     return this.model.findAll({
       where: {
         type_without_tone: { [Op.like]: `%${type_without_tone}` },
         type_with_tone: { [Op.like]: `%${type_with_tone}` },
-        length: length
       },
       offset: 0,
       limit: 100,
