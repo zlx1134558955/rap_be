@@ -60,7 +60,7 @@ async function getWords_fn (req, res, next, that) {
   type_with_tone = num === 0 ? '' : type_with_tone;
   // 查数据库
   try {
-    const data = await summaryModel.getBackUps(type_with_tone, type_without_tone)
+    const data = await summaryModel.getBackUps(word, type_with_tone, type_without_tone)
     success(res, data)
   }
   catch (err) { next(err) }

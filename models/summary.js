@@ -1,6 +1,6 @@
-let Sequelize = require('sequelize')
-const BaseModel = require('./base.js')
-let Op = Sequelize.Op
+let Sequelize = require('sequelize');
+const BaseModel = require('./base.js');
+let Op = Sequelize.Op;
 class SummaryModel extends BaseModel {
   constructor() {
     super('summary', {
@@ -11,23 +11,22 @@ class SummaryModel extends BaseModel {
       final_without_tone: { type: Sequelize.STRING },
       type_with_tone: { type: Sequelize.STRING },
       type_without_tone: { type: Sequelize.STRING },
-      length: { type: Sequelize.INTEGER },
-    })
-    this.model = super.getModel()
-    this.model.sync()
+      length: { type: Sequelize.INTEGER }
+    });
+    this.model = super.getModel();
+    this.model.sync();
   }
-  getBackUps (type_with_tone, type_without_tone) {
+  getBackUps(word, type_with_tone, type_without_tone) {
     return this.model.findAll({
       where: {
+        word: { [Op.ne]: word },
         type_without_tone: { [Op.like]: `%${type_without_tone}` },
-        type_with_tone: { [Op.like]: `%${type_with_tone}` },
+        type_with_tone: { [Op.like]: `%${type_with_tone}` }
       },
       offset: 0,
       limit: 100,
-      order: [
-        ['rate', 'DESC']
-      ]
-    })
+      order: [['rate', 'DESC']]
+    });
   }
 }
-module.exports = new SummaryModel()
+module.exports = new SummaryModel();
