@@ -16,15 +16,32 @@ class SummaryModel extends BaseModel {
     this.model = super.getModel();
     this.model.sync();
   }
-  getBackUps(word, type_with_tone, type_without_tone) {
+  getBackUps(word, type_with_tone, type_without_tone, length, num) {
+    if (length >= 5) {
+      return this.model.findAll({
+        where: {
+          word: { [Op.ne]: word },
+          type_without_tone: { [Op.like]: `%${type_without_tone}` },
+          type_with_tone: { [Op.like]: `%${type_with_tone}` },
+          length: { [Op.gte]: length }
+        },
+        offset: 0,
+        limit: num || 50,
+        order: [['rate', 'DESC']]
+      });
+    }
     return this.model.findAll({
       where: {
         word: { [Op.ne]: word },
-        type_without_tone: { [Op.like]: `%${type_without_tone}` },
-        type_with_tone: { [Op.like]: `%${type_with_tone}` }
+        type_with_tone: { [Op.like]: `%${type_with_tone}` },
+        length: { [Op.eq]: length || 2 },
+        [Op.or]: [
+          { type_without_tone: { [Op.like]: `%-${type_without_tone}` } },
+          { type_without_tone: { [Op.like]: `${type_without_tone}` } }
+        ]
       },
       offset: 0,
-      limit: 100,
+      limit: num || 50,
       order: [['rate', 'DESC']]
     });
   }
