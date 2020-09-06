@@ -21,7 +21,10 @@ class SummaryModel extends BaseModel {
       return this.model.findAll({
         where: {
           word: { [Op.ne]: word },
-          type_without_tone: { [Op.like]: `%${type_without_tone}` },
+          [Op.or]: [
+            { type_without_tone: { [Op.like]: `%-${type_without_tone}` } },
+            { type_without_tone: { [Op.eq]: `${type_without_tone}` } }
+          ],
           type_with_tone: { [Op.like]: `%${type_with_tone}` },
           length: { [Op.gte]: length }
         },
@@ -37,7 +40,7 @@ class SummaryModel extends BaseModel {
         length: { [Op.eq]: length || 2 },
         [Op.or]: [
           { type_without_tone: { [Op.like]: `%-${type_without_tone}` } },
-          { type_without_tone: { [Op.like]: `${type_without_tone}` } }
+          { type_without_tone: { [Op.eq]: `${type_without_tone}` } }
         ]
       },
       offset: 0,
