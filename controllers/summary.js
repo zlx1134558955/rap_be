@@ -22,14 +22,6 @@ class SummaryController extends BaseController {
 module.exports = new SummaryController();
 
 /**
- * 新增一条词汇
- * @author 周立翔
- * @version 1.0 2020-8-16
- * @returns null 收件地址列表
- */
-async function addWord_fn(req, res, next, that) {}
-
-/**
  * 查询多条词汇
  * @author 周立翔
  * @params word string 押韵词汇
