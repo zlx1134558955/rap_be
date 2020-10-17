@@ -1,4 +1,4 @@
 node_modules
 .idea
 .git
-public
+config/person.js
